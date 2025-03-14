@@ -70,7 +70,7 @@ export default function WorkHistory({ onNext, onBack }: WorkHistoryProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
-      {experiences.map((experience, index) => (
+      {experiences.map((experience) => (
         <div
           key={experience.id}
           className="relative bg-gray-50 p-6 rounded-lg border border-gray-200"
