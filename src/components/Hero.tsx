@@ -10,11 +10,11 @@ export default function Hero() {
             <span className="block text-blue-600">Resume Builder</span>
           </h1>
           <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
-            Create ATS-friendly and professionally written resumes in seconds. Stand out in today's competitive job market with AI-optimized content.
+            Create ATS-friendly and professionally written resumes in seconds. Stand out in today&apos;s competitive job market with AI-optimized content.
           </p>
           <div className="mt-8 flex justify-center">
             <div className="inline-flex rounded-md shadow">
-              <button className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+              <button className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-700 hover:cursor-pointer">
                 Build Your Resume
               </button>
             </div>
