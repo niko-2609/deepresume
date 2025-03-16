@@ -2,11 +2,6 @@
 
 import React, { useState } from 'react';
 
-interface WorkHistoryProps {
-  onNext: () => void;
-  onBack: () => void;
-}
-
 interface WorkExperience {
   id: string;
   company: string;
@@ -16,6 +11,11 @@ interface WorkExperience {
   endDate: string;
   current: boolean;
   description: string;
+}
+
+interface WorkHistoryProps {
+  onNext: (experiences: WorkExperience[]) => void;
+  onBack: () => void;
 }
 
 export default function WorkHistory({ onNext, onBack }: WorkHistoryProps) {
@@ -65,7 +65,7 @@ export default function WorkHistory({ onNext, onBack }: WorkHistoryProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Save data to backend
-    onNext();
+    onNext(experiences);
   };
 
   return (

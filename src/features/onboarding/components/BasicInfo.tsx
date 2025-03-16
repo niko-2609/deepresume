@@ -2,12 +2,21 @@
 
 import React, { useState } from 'react';
 
+interface BasicInfoFormData {
+  fullName: string;
+  email: string;
+  phone: string;
+  location: string;
+  title: string;
+  summary: string;
+}
+
 interface BasicInfoProps {
-  onNext: () => void;
+  onNext: (data: BasicInfoFormData) => void;
 }
 
 export default function BasicInfo({ onNext }: BasicInfoProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<BasicInfoFormData>({
     fullName: '',
     email: '',
     phone: '',
@@ -19,7 +28,7 @@ export default function BasicInfo({ onNext }: BasicInfoProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Save data to backend
-    onNext();
+    onNext(formData);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
