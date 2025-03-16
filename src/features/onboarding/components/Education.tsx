@@ -2,12 +2,7 @@
 
 import React, { useState } from 'react';
 
-interface EducationProps {
-  onNext: () => void;
-  onBack: () => void;
-}
-
-interface Education {
+interface EducationEntry {
   id: string;
   school: string;
   degree: string;
@@ -19,8 +14,14 @@ interface Education {
   description: string;
 }
 
-export default function Education({ onNext, onBack }: EducationProps) {
-  const [educations, setEducations] = useState<Education[]>([
+interface EducationProps {
+  onNext: (education: EducationEntry[]) => void;
+  onBack: () => void;
+  isSubmitting: boolean;
+}
+
+export default function Education({ onNext, onBack, isSubmitting }: EducationProps) {
+  const [educationList, setEducationList] = useState<EducationEntry[]>([
     {
       id: '1',
       school: '',
@@ -35,7 +36,7 @@ export default function Education({ onNext, onBack }: EducationProps) {
   ]);
 
   const addEducation = () => {
-    setEducations(prev => [
+    setEducationList(prev => [
       ...prev,
       {
         id: Date.now().toString(),
@@ -52,11 +53,11 @@ export default function Education({ onNext, onBack }: EducationProps) {
   };
 
   const removeEducation = (id: string) => {
-    setEducations(prev => prev.filter(edu => edu.id !== id));
+    setEducationList(prev => prev.filter(edu => edu.id !== id));
   };
 
-  const updateEducation = (id: string, field: keyof Education, value: string | boolean) => {
-    setEducations(prev =>
+  const updateEducation = (id: string, field: keyof EducationEntry, value: string | boolean) => {
+    setEducationList(prev =>
       prev.map(edu =>
         edu.id === id
           ? { ...edu, [field]: value }
@@ -67,18 +68,17 @@ export default function Education({ onNext, onBack }: EducationProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Save data to backend
-    onNext();
+    onNext(educationList);
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
-      {educations.map((education) => (
+      {educationList.map((education) => (
         <div
           key={education.id}
           className="relative bg-gray-50 p-6 rounded-lg border border-gray-200"
         >
-          {educations.length > 1 && (
+          {educationList.length > 1 && (
             <button
               type="button"
               onClick={() => removeEducation(education.id)}
@@ -116,7 +116,6 @@ export default function Education({ onNext, onBack }: EducationProps) {
                 onChange={(e) => updateEducation(education.id, 'degree', e.target.value)}
                 required
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="Bachelor's, Master's, etc."
               />
             </div>
 
@@ -176,7 +175,7 @@ export default function Education({ onNext, onBack }: EducationProps) {
               </div>
             </div>
 
-            {/* Current Education Checkbox */}
+            {/* Current Status */}
             <div className="col-span-2">
               <label className="inline-flex items-center">
                 <input
@@ -185,7 +184,7 @@ export default function Education({ onNext, onBack }: EducationProps) {
                   onChange={(e) => updateEducation(education.id, 'current', e.target.checked)}
                   className="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 />
-                <span className="ml-2 text-sm text-gray-600">I'm currently studying here</span>
+                <span className="ml-2 text-sm text-gray-600">I am currently studying here</span>
               </label>
             </div>
 
@@ -199,18 +198,8 @@ export default function Education({ onNext, onBack }: EducationProps) {
                 onChange={(e) => updateEducation(education.id, 'description', e.target.value)}
                 rows={4}
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="Describe your academic achievements, activities, etc..."
+                placeholder="Describe your achievements, activities, etc..."
               />
-              <button
-                type="button"
-                className="mt-2 text-sm text-blue-600 hover:text-blue-700"
-                onClick={() => {
-                  // TODO: Implement AI description generation
-                  console.log('Generate description with AI');
-                }}
-              >
-                Generate with AI
-              </button>
             </div>
           </div>
         </div>
@@ -239,9 +228,12 @@ export default function Education({ onNext, onBack }: EducationProps) {
         </button>
         <button
           type="submit"
-          className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          disabled={isSubmitting}
+          className={`inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+            isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
         >
-          Continue
+          {isSubmitting ? 'Submitting...' : 'Complete Onboarding'}
         </button>
       </div>
     </form>
