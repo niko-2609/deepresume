@@ -97,7 +97,7 @@ export default function Onboarding() {
       } as OnboardingData;
 
       await submitOnboardingData(finalData);
-      router.push('/dashboard');
+      router.push('/generate');
     } catch (error) {
       console.error('Failed to submit onboarding data:', error);
       alert('Failed to submit onboarding data. Please try again.');
