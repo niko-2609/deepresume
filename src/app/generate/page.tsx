@@ -1,6 +1,6 @@
 "use client";
 
-import ResumeGenerator from "@/features/workbench/components/generator";
+import ResumeGenerator from '@/features/workbench/components/ResumeGenerator';
 
 function GeneratePage() {
   return (
