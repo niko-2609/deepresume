@@ -51,8 +51,7 @@ export default function Onboarding() {
     setFormData(prev => ({
       ...prev,
       user: {
-        firstName: basicInfo.fullName.split(' ')[0],
-        lastName: basicInfo.fullName.split(' ').slice(1).join(' '),
+        fullName: basicInfo.fullName,
         email: basicInfo.email,
         phone: basicInfo.phone,
         location: basicInfo.location,
