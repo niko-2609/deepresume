@@ -20,8 +20,7 @@ export interface Education {
 }
 
 export interface UserProfile {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   email: string;
   phone?: string;
   location: string;

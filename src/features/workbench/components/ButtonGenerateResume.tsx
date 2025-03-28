@@ -48,7 +48,10 @@ export default function ButtonGenerateResume({
                     'Content-Type': 'application/json',
                     'Accept': 'text/event-stream',
                 },
-                body: JSON.stringify({ jobDescription }),
+                body: JSON.stringify({ 
+                    jobDescription,
+                    userId: 11 // Hardcoded user ID for now
+                }),
                 signal: abortControllerRef.current.signal,
             });
 
